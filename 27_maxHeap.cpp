@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+void swap(int &a, int &b) {
+
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void maxHeapify(int arr[], int n, int i) {
+
+    int largest = i;
+
+    int left = 2 * i + 1;
+
+    int right = 2 * i + 2;
+
+    if(left < n &&
+       arr[left] > arr[largest])
+
+        largest = left;
+
+    if(right < n &&
+       arr[right] > arr[largest])
+
+        largest = right;
+
+    if(largest != i) {
+
+        swap(arr[i], arr[largest]);
+
+        maxHeapify(arr, n, largest);
+    }
+}
+
+void buildMaxHeap(int arr[], int n) {
+
+    for(int i = n/2 - 1; i >= 0; i--)
+
+        maxHeapify(arr, n, i);
+}
+
+int main() {
+
+    int n;
+
+    cout << "Enter number of students: ";
+    cin >> n;
+
+    int *heap = new int[n];
+
+    cout << "Enter marks of students:\n";
+
+    for(int i = 0; i < n; i++) {
+
+        cin >> heap[i];
+    }
+
+    buildMaxHeap(heap, n);
+
+    cout << "\nMaximum Marks = "
+         << heap[0] << endl;
+
+    delete[] heap;
+
+    return 0;
+}
