@@ -15,14 +15,35 @@ Node* newNode(int val) {
     return temp;
 }
 
-Node* insert(Node* root, int val) {
+Node* insert(Node* root , int val){
+    Node* newnode = newNode(val);
     if(root == NULL){
-        return newNode(val);
+        return newnode;
     }
-    if(val < root->data){
-        root->left = insert(root->left, val);
+
+    queue<Node*> q;
+    q.push(root);
+
+    while(!q.empty()){
+        Node* temp = q.front();
+        q.pop();
+
+        if(temp->left == NULL){
+            temp->left = newnode;
+            return root;
+        }
+        else{
+            q.push(temp -> left);
+        }
+
+        if(temp->right == NULL){
+            temp->right = newnode;
+            return root;
+        }
+        else{
+            q.push(temp -> right);
+        }
     }
-    root->right = insert(root->right, val);
 
     return root;
 }
